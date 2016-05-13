@@ -1,5 +1,14 @@
 <?php
     include('getNama.php');
+	date_default_timezone_set('Asia/Jakarta');
+	$date = date('Y-m-d', time());
+	$date1 = "";
+	$date2 = "";
+	 if(isset($_GET["tanggal"])) {
+		$date = $_GET["tanggal"];
+		$date1 = "'".$date." 00:00:01'";
+		$date2 = "'".$date." 23:59:59'";
+	 }
 ?>
 
 <!DOCTYPE html>
@@ -33,9 +42,8 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="home_kasir.php">Home </a></li>
-            <li class="active"><a href="#">Lihat Menu </a></li>
-            <li><a href="lihat_pemesanan_makanan.php">Lihat Pemesanan Makanan </a></li>
+            <li class="active"><a href="#">Home </a></li>
+            <li><a href="lihat_menu.php">Lihat Menu </a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                       <?php echo "<span style='color:blue'>".$nama."</span>"; ?>
@@ -52,7 +60,6 @@
         </div>
       </div>
     </nav>
-
     <!-- Welcoming -->
     <div id="login" class="container">
         <div class="row">
@@ -64,9 +71,12 @@
                 </div>
                 <div>
                     <form action = "logout.php">
- +                      <input type = "submit" value = "Log Out"></input>
- +                  </form>
+						<input type = "submit" value = "Log Out"></input>
+					</form>
                 </div>
+				<div id = "lihat_menu">
+					<a href = "home_chef.php">Back to Home</a><br>
+				</div>
             </div>
         </div>
     </div>
@@ -76,45 +86,51 @@
             <hr>
             <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
                 <!-- <div class="well"> -->
-                <?php 
+				<div>
+					<form method="GET" action="lihat_menu.php">
+					<input name = 'tanggal' type = 'date' value = 'tes'></input>
+					<input type = 'submit'></input> 
+					</form>
+				</div>
+				<?php
                     $hostname = "localhost";
                     $user = "root";
                     $password = "";
                     $database = "foodie";
-
                     //Loadmore configuarion
-                    $resultsPerPage = 10;
+                    $resultsPerPage = 15;
                     $bd = mysql_connect($hostname, $user, $password) or die("Failed to connect to database");
-                    mysql_select_db($database, $bd) or die("Database Not Found");
-
-                    $que=mysql_query("SELECT * FROM `MENU_HARIAN` ORDER BY `WAKTU` DESC");
-                    
-                    if($que === FALSE) { 
-                        die(mysql_error()); 
-                    }
-                    
-                    $count = 0;
-                    while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
-                        // if ($data['EMAILKASIR'] == $emailSession) {
-                            echo "<div class='well'>";
-                            echo "<strong>".($count+1)."</strong>";
-                            echo "<hr>";
-                            echo "Nama menu : <span style='color:red'>".$data['NAMAMENU']."</span>";
-                            echo "<br>Waktu : <strong>".$data['WAKTU']."</strong>";
-                            echo "<br>Jumlah : <strong>".$data['JUMLAH']."</strong>";
-                            echo "<br><br>Email chef : ".$data['EMAILCHEF'];
-                            echo "</div>";
-                            $count++;
-                        // }
-                    }
+					if(isset($_GET["tanggal"])){
+						mysql_select_db($database, $bd) or die("Database Not Found");
+						$que=mysql_query("SELECT * FROM MENU WHERE nama IN(SELECT namamenu FROM MENU_HARIAN WHERE WAKTU BETWEEN $date1 AND $date2 )ORDER BY NAMA ASC");
+						
+						if($que === FALSE) { 
+							die(mysql_error()); 
+						}
+						
+						$count = 0;
+						while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
+							// if ($data['EMAILKASIR'] == $emailSession) {
+								echo "<div class='well'>";
+								echo "<strong>".($count+1)."</strong>";
+								echo "<hr>";
+								echo "Nama : <span style='color:red'>".$data['NAMA']."</span>";
+								echo "<br>Deskripsi : <strong>".$data['DESKRIPSI']."</strong>";
+								echo "<br>Harga : <strong>".$data['HARGA']."</strong>";
+								echo "<br>Jumlah Tersedia : <strong>".$data['JUMLAHTERSEDIA']."</strong>";
+								echo "<br>Kategori : ".$data['KATEGORI'];
+								echo "<br><a href = 'lihat.php'> LIHAT </a>";
+								echo "</div>";
+								$count++;
+							// }
+						}
+					}
                 ?>
                 <!-- </div> -->
             </div>
         </div>
     </div>
 
-	<?php include('footer.php'); ?>
-    
     <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
