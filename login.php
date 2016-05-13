@@ -32,11 +32,14 @@
             }
 
             if($role == 'ST') {
-                header("Location: home_staf.php");
+            	// Masuk ke page staf
+                header("Location: lihat_pembelian_bahan_makanan.php");
             } else if($role == 'KS') {
-                header("Location: home_kasir.php");
+            	// Masuk ke page kasir
+                header("Location: lihat_pemesanan_makanan.php");
             } else if($role == 'CH') {
-                header("Location: home_chef.php");
+            	// Masuk ke page chef
+                header("Location: lihat_menu.php");
             } else {
                 header("Location: home_manager.php");
             }

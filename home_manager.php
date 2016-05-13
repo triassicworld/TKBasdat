@@ -28,8 +28,8 @@
                 </div>
                 <div>
                     <form action = "logout.php">
-						<input type = "submit" value = "Log Out"></input>
-					</form>
+ +                      <input type = "submit" value = "Log Out"></input>
+ +                  </form>
                 </div>
             </div>
         </div>

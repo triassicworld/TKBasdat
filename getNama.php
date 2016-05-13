@@ -18,7 +18,17 @@
 
     // Get nama
     if($row = $haha->fetch_assoc()) { 
-        $nama = $row['NAMA'];
+        $roleTmp = $row['ROLE'];
+
+        if($roleTmp == 'ST') {
+            $roleTmp = 'Staf ';
+        } else if($roleTmp == 'KS') {
+            $roleTmp = 'Kasir ';
+        } else {
+            $roleTmp = 'Chef ';
+        }
+
+        $nama = $roleTmp . $row['NAMA'];
         mysqli_close($conn2);
     }
 ?>
