@@ -1,5 +1,9 @@
 <?php
     include('getNama.php');
+
+    if (isset($_GET['simpanBahan'])) {
+        header('Location : rincian_pembelian_bahan_makanan.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -52,63 +56,35 @@
         </div>
       </div>
     </nav>
-    
-    <!-- Welcoming -->
-    <div id="login" class="container">
+
+    <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="well">
-                    <h3>Hello, staf 
-                        <?php echo " <span style='color:blue'>".$nama."</span>"; ?>
-                    </h3>
+                    <form action="beli_bahan_makanan.php">
+                        <table border="1" style="width:100%">
+                            <tr>
+                                <th>Nama Bahan</th>
+                                <th>Harga Satuan</th>
+                                <th>Satuan</th>
+                                <th>Jumlah</th>
+                                <th>Total</th>
+                            </tr>
+                            <?php
+                                if (isset($_GET['tambahBahan'])) {
+                                    runMyFunction();
+                                }
+
+                                function runMyFunction() {
+                                    include('tambah_bahan.php');
+                                }
+                            ?>
+                        </table>
+                        
+                        <input type="submit" class="btn btn-default" name="tambahBahan" value="Tambah Bahan"/>
+                        <input type="submit" class="btn btn-default" name="simpanBahan" value="Simpan" />
+                    </form>
                 </div>
-                <div>
-                    <form action = "logout.php">
- +                      <input type = "submit" value = "Log Out"></input>
- +                  </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="" class="container">
-        <div class="row">
-            <hr>
-            <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
-                <!-- <div class="well"> -->
-                <?php 
-                    $hostname = "localhost";
-                    $user = "root";
-                    $password = "";
-                    $database = "foodie";
-
-                    //Loadmore configuarion
-                    $resultsPerPage = 10;
-                    $bd = mysql_connect($hostname, $user, $password) or die("Failed to connect to database");
-                    mysql_select_db($database, $bd) or die("Database Not Found");
-
-                    $que=mysql_query("SELECT * FROM `PEMBELIAN` ORDER BY `WAKTU` DESC");
-                    
-                    if($que === FALSE) { 
-                        die(mysql_error()); 
-                    }
-                    
-                    $count = 0;
-                    while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
-                        // if ($data['EMAILKASIR'] == $emailSession) {
-                            echo "<div class='well'>";
-                            echo "<strong>".($count+1)."</strong>";
-                            echo "<hr>";
-                            echo "Nomor nota : <span style='color:red'>".$data['NOMORNOTA']."</span>";
-                            echo "<br>Waktu : <strong>".$data['WAKTU']."</strong>";
-                            echo "<br>Supplier : <strong>".$data['SUPPLIER']."</strong>";
-                            echo "<br><br>Email staf : ".$data['EMAILSTAF'];
-                            echo "</div>";
-                            $count++;
-                        // }
-                    }
-                ?>
-                <!-- </div> -->
             </div>
         </div>
     </div>
