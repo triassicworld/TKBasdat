@@ -17,6 +17,42 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home_kasir.php">TK Basdat</a>
+        </div>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="home_staf.php">Home </a></li>
+            <li class="active"><a href="#">Lihat Pembelian Makanan </a></li>
+            <li><a href="beli_bahan_makanan.php">Beli Bahan Makanan </a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                      <?php echo "<span style='color:blue'>".$nama."</span>"; ?>
+                  <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Setting</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="logout.php">Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <!-- Welcoming -->
     <div id="login" class="container">
         <div class="row">
