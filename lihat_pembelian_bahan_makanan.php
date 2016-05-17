@@ -1,5 +1,14 @@
 <?php
     include('getNama.php');
+	date_default_timezone_set('Asia/Jakarta');
+	$date = date('Y-m-d', time());
+	$date1 = "";
+	$date2 = "";
+	 if(isset($_GET["tanggal"])) {
+		$date = $_GET["tanggal"];
+		$date1 = "'".$date." 00:00:01'";
+		$date2 = "'".$date." 23:59:59'";
+	 }
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +26,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+	<nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Mobile display -->
         <div class="navbar-header">
@@ -33,9 +42,23 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="home_staf.php">Home </a></li>
-            <li class="active"><a href="#">Lihat Pembelian Makanan </a></li>
-            <li><a href="beli_bahan_makanan.php">Beli Bahan Makanan </a></li>
+            <li class="active"><a href="home.php">Home </a></li>
+            <?php
+			if($yeay == "Chef") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+			}
+			else if($yeay == "Kasir") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+				echo "<li>"."<a href='lihat_pemesanan_makanan.php'>"."Lihat Pemesanan Makanan"."</a>"."</li>";
+			}
+			else if($yeay == "Staf") {
+				echo "<li>"."<a href='lihat_pembelian_bahan_makanan.php'>"."Lihat Pembelian Bahan Makanan"."</a>"."</li>";
+				echo "<li>"."<a href='beli_bahan_makanan.php'>"."Beli Bahan Makanan"."</a>"."</li>";
+			}
+			else {
+				echo "";
+			}
+			?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                       <?php echo "<span style='color:blue'>".$nama."</span>"; ?>
@@ -58,14 +81,19 @@
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
                 <div class="well">
-                    <h3>Hello, staf 
-                        <?php echo " <span style='color:blue'>".$nama."</span>"; ?>
+                    <h3>Hello, 
+                        <?php 
+						$yeay = "";
+						if($role == "KS")
+							$yeay = "Kasir";
+						else if($role == "CH")
+							$yeay = "Chef";
+						else if($role == "ST")
+							$yeay = "Staf";
+						else
+							$yeay = "Manager";
+						echo " <span style='color:blue'>".$yeay." ".$nama."</span>"; ?>
                     </h3>
-                </div>
-                <div>
-                    <form action = "logout.php">
- +                      <input type = "submit" value = "Log Out"></input>
- +                  </form>
                 </div>
             </div>
         </div>
@@ -76,6 +104,12 @@
             <hr>
             <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
                 <!-- <div class="well"> -->
+				<div>
+					<form method="GET" action="lihat_pembelian_bahan_makanan.php">
+					<input name = 'tanggal' type = 'date' value = 'tes'></input>
+					<input type = 'submit'></input> 
+					</form>
+				</div>
                 <?php 
                     $hostname = "localhost";
                     $user = "root";
@@ -83,36 +117,45 @@
                     $database = "foodie";
 
                     //Loadmore configuarion
-                    $resultsPerPage = 10;
+                    $resultsPerPage = 15;
                     $bd = mysql_connect($hostname, $user, $password) or die("Failed to connect to database");
-                    mysql_select_db($database, $bd) or die("Database Not Found");
+					
+					if(isset($_GET["tanggal"])){
+							mysql_select_db($database, $bd) or die("Database Not Found");
 
-                    $que=mysql_query("SELECT * FROM `PEMBELIAN` ORDER BY `WAKTU` DESC");
-                    
-                    if($que === FALSE) { 
-                        die(mysql_error()); 
-                    }
-                    
-                    $count = 0;
-                    while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
-                        // if ($data['EMAILKASIR'] == $emailSession) {
-                            echo "<div class='well'>";
-                            echo "<strong>".($count+1)."</strong>";
-                            echo "<hr>";
-                            echo "Nomor nota : <span style='color:red'>".$data['NOMORNOTA']."</span>";
-                            echo "<br>Waktu : <strong>".$data['WAKTU']."</strong>";
-                            echo "<br>Supplier : <strong>".$data['SUPPLIER']."</strong>";
-                            echo "<br><br>Email staf : ".$data['EMAILSTAF'];
-                            echo "</div>";
-                            $count++;
-                        // }
-                    }
+							$que=mysql_query("SELECT * FROM `PEMBELIAN` WHERE WAKTU BETWEEN $date1 AND $date2 ORDER BY `WAKTU` DESC");
+							
+							if($que === FALSE) { 
+								die(mysql_error()); 
+							}
+							
+							$count = 0;
+							while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
+								// if ($data['EMAILKASIR'] == $emailSession) {
+									echo "<div class='well'>";
+									echo "<strong>".($count+1)."</strong>";
+									echo "<hr>";
+									echo "Nomor Nota : <span style='color:red'>".$data['NOMORNOTA']."</span>";
+									echo "<br>Waktu  : <strong>".$data['WAKTU']."</strong>";
+									echo "<br>Nama Supplier  : <strong>".$data['NAMASUPPLIER']."</strong>";
+									echo "<br>Email Staf  : <strong>".$data['EMAILSTAFF']."</strong>";
+									echo "<br><a href = 'rincian_pembelian_bahan_makanan.php'>Rincian</a>";
+									echo "</div>";
+									
+									$count++;
+								// }
+							}
+						}
                 ?>
                 <!-- </div> -->
             </div>
+			
+			
         </div>
     </div>
+	<center><button>Next Page</button></center>
 
+    <!-- Footer -->
     <?php include('footer.php'); ?>
 
     <!-- jQuery -->
