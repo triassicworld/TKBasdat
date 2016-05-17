@@ -1,9 +1,7 @@
 <?php
     include('getNama.php');
 
-    if (isset($_GET['simpanBahan'])) {
-        header('Location : rincian_pembelian_bahan_makanan.php');
-    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +35,23 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="home_staf.php">Home </a></li>
-            <li><a href="lihat_pembelian_makanan.php">Lihat Pembelian Makanan </a></li>
-            <li class="active"><a href="#">Beli Bahan Makanan </a></li>
+            <li><a href="home.php">Home </a></li>
+            <?php
+			if($yeay == "Chef") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+			}
+			else if($yeay == "Kasir") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+				echo "<li>"."<a href='lihat_pemesanan_makanan.php'>"."Lihat Pemesanan Makanan"."</a>"."</li>";
+			}
+			else if($yeay == "Staf") {
+				echo "<li>"."<a href='lihat_pembelian_bahan_makanan.php'>"."Lihat Pembelian Bahan Makanan"."</a>"."</li>";
+				echo "<li>"."<a href='beli_bahan_makanan.php'>"."Beli Bahan Makanan"."</a>"."</li>";
+			}
+			else {
+				echo "";
+			}
+			?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                       <?php echo "<span style='color:blue'>".$nama."</span>"; ?>
@@ -78,6 +90,9 @@
                                 function runMyFunction() {
                                     include('tambah_bahan.php');
                                 }
+								if (isset($_GET['simpanBahan'])) {
+									header('Location : rincian_pembelian_bahan_makanan.php');
+								}
                             ?>
                         </table>
                         
