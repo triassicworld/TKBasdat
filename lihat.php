@@ -1,3 +1,5 @@
+<?php include ('getNama.php');
+?>
 <html lang="en">
 
 <head>
@@ -13,52 +15,60 @@
 
 <body>
 	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		  </button>
-		  <a class="navbar-brand" href="#">Brand</a>
-		</div>
+      <div class="container-fluid">
+        <!-- Mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home_kasir.php">TK Basdat</a>
+        </div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		  <ul class="nav navbar-nav">
-			<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-			<li><a href="#">Link</a></li>
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-			  <ul class="dropdown-menu">
-				<li><a href="#">Action</a></li>
-				<li><a href="#">Another action</a></li>
-				<li><a href="#">Something else here</a></li>
-				<li role="separator" class="divider"></li>
-				<li><a href="#">Separated link</a></li>
-				<li role="separator" class="divider"></li>
-				<li><a href="#">One more separated link</a></li>
-			  </ul>
-			</li>
-		  </ul>
-		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="#">Link</a></li>
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-			  <ul class="dropdown-menu">
-				<li><a href="#">Action</a></li>
-				<li><a href="#">Another action</a></li>
-				<li><a href="#">Something else here</a></li>
-				<li role="separator" class="divider"></li>
-				<li><a href="#">Separated link</a></li>
-			  </ul>
-			</li>
-		  </ul>
-		</div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="home.php">Home </a></li>
+            <?php
+			if($yeay == "Chef") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+			}
+			else if($yeay == "Kasir") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+				echo "<li>"."<a href='lihat_pemesanan_makanan.php'>"."Lihat Pemesanan Makanan"."</a>"."</li>";
+			}
+			else if($yeay == "Staf") {
+				echo "<li>"."<a href='lihat_pembelian_bahan_makanan.php'>"."Lihat Pembelian Bahan Makanan"."</a>"."</li>";
+				echo "<li>"."<a href='beli_bahan_makanan.php'>"."Beli Bahan Makanan"."</a>"."</li>";
+			}
+			else {
+				echo "";
+			}
+			?>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                      <?php echo "<span style='color:blue'>".$nama."</span>"; ?>
+                  <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Setting</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="logout.php">Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+	
+	<div>
+                    <form action = "logout.php">
+						<input type = "submit" value = "Log Out"></input>
+					</form>
+                </div>
 	
 	<div>
 		<h3>Nama makanan</h3>
@@ -69,5 +79,6 @@
 		Kategori : <br>
 		</p>
 	</div>
+	
 </body>
 </html>
