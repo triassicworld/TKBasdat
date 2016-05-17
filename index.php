@@ -38,8 +38,28 @@
         </div>
     </div>
 
+    <br>
+    <br>
+
+    <div id="bottom_of_page" class="bg-primary">
+        <br>
+    </div>
+
     <!-- Footer -->
-    <?php include('footer.php'); ?>
+    <footer>
+        <div>
+            <a id="go-top-toggle" href="#top" class="btn btn-dark">^</a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <p><strong>Created by</strong></p>
+                    <p>Fauzan M. Baskara | Hamdan Fachry | Rizky Khairullah | Victor Ardianto</p>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
