@@ -42,8 +42,23 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Home </a></li>
-            <li><a href="lihat_menu.php">Lihat Menu </a></li>
+            <li class="active"><a href="home.php">Home </a></li>
+            <?php
+			if($yeay == "Chef") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+			}
+			else if($yeay == "Kasir") {
+				echo "<li>"."<a href='lihat_menu.php'>"."Lihat Menu"."</a>"."</li>";
+				echo "<li>"."<a href='lihat_pemesanan_makanan.php'>"."Lihat Pemesanan Makanan"."</a>"."</li>";
+			}
+			else if($yeay == "Staf") {
+				echo "<li>"."<a href='lihat_pembelian_bahan_makanan.php'>"."Lihat Pembelian Bahan Makanan"."</a>"."</li>";
+				echo "<li>"."<a href='beli_bahan_makanan.php'>"."Beli Bahan Makanan"."</a>"."</li>";
+			}
+			else {
+				echo "";
+			}
+			?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                       <?php echo "<span style='color:blue'>".$nama."</span>"; ?>
@@ -65,8 +80,18 @@
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
                 <div class="well">
-                    <h3>Hello, chef
-                        <?php echo " <span style='color:blue'>".$nama."</span>"; ?>
+                    <h3>Hello, 
+                        <?php 
+						$yeay = "";
+						if($role == "KS")
+							$yeay = "Kasir";
+						else if($role == "CH")
+							$yeay = "Chef";
+						else if($role == "ST")
+							$yeay = "Staf";
+						else
+							$yeay = "Manager";
+						echo " <span style='color:blue'>".$yeay." ".$nama."</span>"; ?>
                     </h3>
                 </div>
                 <div>
