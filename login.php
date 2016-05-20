@@ -15,39 +15,29 @@
             $emailSession = $_POST["email"];
             $_SESSION["userLogin"] = $emailSession;
             // Coba bikin koneksi ke database lagi
-            $sql = "SELECT * FROM `user` WHERE email='$emailSession'";
+            $sql = "SELECT * FROM foodie.user WHERE 'email'='$emailSession'";
             $conn2 = connectDB();
             $haha = "";
             $row = "";
-            $haha = $conn2->query($sql);
+            $haha = pg_query($conn2, $sql);
             // Get role
-            if($row = $haha->fetch_assoc()) { 
+            if($row = pg_fetch_assoc($haha)) { 
                 $role = $row['ROLE'];
-                mysqli_close($conn2);
+                pg_close($conn2);
             }
             header("Location: home.php");
         } else {
-            $resp = $str;
+            // $resp = $str;
+            $resp = "bacot";
         }
     }
     function login($email, $pass) {
         $conn = connectDB();
-        $sql = "SELECT * FROM `user` WHERE email='$email' AND password='$pass'";
-        $result = mysqli_query($conn, $sql);
-        $checkemail = "SELECT * FROM `user` WHERE email='$email'";
-        $result2 = mysqli_query($conn, $checkemail);
-        $checkPassword = "SELECT * FROM `user` WHERE password='$pass'";
-        $result3 = mysqli_query($conn, $checkPassword);
-        if(mysqli_num_rows($result2) == 0) {
-            mysqli_close($conn);
-            return "email tidak valid";
-        }
-        if(mysqli_num_rows($result3) == 0) {
-            mysqli_close($conn);
-            return "password tidak valid";
-        }
-        if(mysqli_num_rows($result) > 0) {
-            mysqli_close($conn);
+        $sql = "SELECT * FROM foodie.user WHERE 'email'='$email' AND 'password'='$pass'";
+        $result = pg_query($conn, $sql);
+        
+        if(pg_num_rows($result) > 0) {
+            pg_close($conn);
             return "";
         }
     }

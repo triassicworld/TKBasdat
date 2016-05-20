@@ -92,24 +92,20 @@
         <div class="row">
             <hr>
             <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
-                <!-- <div class="well"> -->
                 <?php 
-                    $hostname = "localhost";
-                    $user = "root";
-                    $password = "";
-                    $database = "foodie";
                     //Loadmore configuarion
                     $resultsPerPage = 10;
-                    $bd = mysql_connect($hostname, $user, $password) or die("Failed to connect to database");
-                    mysql_select_db($database, $bd) or die("Database Not Found");
+                    $bd = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=asdasdasd");
+
+                    // pg_select_db($database, $bd) or die("Database Not Found");
                     if($yeay == "Chef") {
-						$que=mysql_query("SELECT * FROM `MENU_HARIAN` ORDER BY `WAKTU` DESC");                    
+						$que=pg_query($bd, "SELECT * FROM menu_harian ORDER BY `waktu` DESC");                    
 						if($que === FALSE) { 
-							die(mysql_error()); 
+							die(pg_error()); 
 						}
 						
 						$count = 0;
-						while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
+						while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
 								echo "<div class='well'>";
 								echo "<strong>".($count+1)."</strong>";
 								echo "<hr>";
@@ -122,13 +118,13 @@
 						}
 					}
 					else if ($yeay == "Kasir") {
-						$que=mysql_query("SELECT * FROM `PEMESANAN` ORDER BY `WAKTUPESAN` DESC");                    
+						$que=pg_query($bd, "SELECT * FROM pemesanan ORDER BY `waktupesan` DESC");                    
 						if($que === FALSE) { 
-							die(mysql_error()); 
+							die(pg_error()); 
 						}
 						
 						$count = 0;
-						while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
+						while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
 							echo "<div class='well'>";
 							echo "<strong>".($count+1)."</strong>";
 							echo "<hr>";
@@ -143,14 +139,14 @@
 						}
 					}
 					else if ($yeay == "Staf") {
-						$que=mysql_query("SELECT * FROM `PEMBELIAN` ORDER BY `WAKTU` DESC");
+						$que=pg_query($bd, "SELECT * FROM pembelian ORDER BY `waktu` DESC");
                     
 						if($que === FALSE) { 
-							die(mysql_error()); 
+							die(pg_error()); 
 						}
 						
 						$count = 0;
-						while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
+						while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
 							echo "<div class='well'>";
 							echo "<strong>".($count+1)."</strong>";
 							echo "<hr>";
@@ -164,7 +160,6 @@
 					}
 					
                 ?>
-                <!-- </div> -->
             </div>
         </div>
     </div>
