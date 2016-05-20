@@ -10,26 +10,18 @@
     $emailSession = $_SESSION["userLogin"];
     
     require "connectDB.php";
-    $sql = "SELECT * FROM foodie.user WHERE 'email'='$emailSession'";
+    $sql = "SELECT * FROM foodie.user WHERE email='$emailSession'";
     $conn2 = connectDB();
-    $haha = "";
-    $row = "";
-    $haha = pg_query($conn2, $sql);
     
-    // Get nama
-    // if($row = pg_fetch_assoc($haha)) { 
-    //     $nama = $row['nama'];
-    //     $role = $row['role'];
-    //     pg_close($conn2);
-    // }
+    $goExecute = $conn2->prepare($sql);
+    $goExecute->execute();
 
-    if($row = pg_fetch_array($haha)) { 
-        $nama = $row[1];
-        $role = $row[4];
-        pg_close($conn2);
-    }
+    $row = "";
+    $row = $goExecute->fetch();
 
-	$yeay = "";
+	$role = $row['role'];
+    $yeay = "";
+
 	if($role === "KS") {
 		$yeay = "Kasir";
 	}

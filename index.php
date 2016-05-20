@@ -1,5 +1,5 @@
 <?php
-    include('login.php');
+    include 'login.php';
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@
                             <input type="email" placeholder="Email" class="form-control" id="email" name="email"/><br>
                             Password<br>
                             <input value="" placeholder="Password" class="form-control" id="password" type="password" name="password" /><br><br>
-                            <input id="button" class="btn btn-primary" type="submit" value="Enter">
+                            <input id="button" class="btn btn-primary" name="enter" type="submit" value="Enter">
                         </div>
                     </form>
                     <?php echo "<span style='color:red'>".$resp."</span>"; ?>

@@ -1,44 +1,31 @@
 <?php
-    // Global variable
+    // Variable untuk menyatakan kesalahan input login
 	$resp = "";
-    $emailSession = "";
-    $role = "";
-    // Konek ke database
-    require "connectDB.php";
-    // Assign ke variables
+
+    session_start();
+
+    require 'connectDB.php';
     $conn = connectDB();
-    // Cek login
-    if(isset($_POST["email"])) {
-        $str = login($_POST["email"], $_POST["password"]);
-        if(strlen($str) == 0) {
-            session_start();
-            $emailSession = $_POST["email"];
-            $_SESSION["userLogin"] = $emailSession;
-            // Coba bikin koneksi ke database lagi
-            $sql = "SELECT * FROM foodie.user WHERE 'email'='$emailSession'";
-            $conn2 = connectDB();
-            $haha = "";
-            $row = "";
-            $haha = pg_query($conn2, $sql);
-            // Get role
-            if($row = pg_fetch_assoc($haha)) { 
-                $role = $row['ROLE'];
-                pg_close($conn2);
-            }
-            header("Location: home.php");
-        } else {
-            // $resp = $str;
-            $resp = "bacot";
-        }
-    }
-    function login($email, $pass) {
-        $conn = connectDB();
-        $sql = "SELECT * FROM foodie.user WHERE 'email'='$email' AND 'password'='$pass'";
-        $result = pg_query($conn, $sql);
+
+    if(isset($_POST['enter'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $sql = "SELECT * FROM foodie.user WHERE email='$email' AND password='$password'";
         
-        if(pg_num_rows($result) > 0) {
-            pg_close($conn);
-            return "";
+        $goExecute = $conn->prepare($sql);
+        $goExecute->execute();
+        
+        $row = "";
+        $row = $goExecute->fetch();
+        
+        if($row == "") {
+            // Respon bahwa tidak bisa login
+            $resp = "email atau password salah";   
+        } 
+        else {
+            $_SESSION['userLogin'] = $row['email'];
+            header("Location: home.php");
         }
     }
 ?>

@@ -95,7 +95,8 @@
                 <?php 
                     //Loadmore configuarion
                     $resultsPerPage = 10;
-                    $bd = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=asdasdasd");
+
+				    $conn3 = connectDB();
 
                     // pg_select_db($database, $bd) or die("Database Not Found");
                     if($yeay == "Chef") {
@@ -139,14 +140,19 @@
 						}
 					}
 					else if ($yeay == "Staf") {
-						$que=pg_query($bd, "SELECT * FROM pembelian ORDER BY `waktu` DESC");
+						// $sql = pg_query($bd, "SELECT * FROM pembelian ORDER BY waktu DESC");
+						$sql = "SELECT * FROM pembelian ORDER BY waktu DESC";
+
+					    $goExecute = $conn3->prepare($sql);
+					    $goExecute->execute();
                     
-						if($que === FALSE) { 
-							die(pg_error()); 
-						}
+						// if($que === FALSE) { 
+						// 	die("Ada Error"); 
+						// }
 						
 						$count = 0;
-						while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
+						// while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
+						while ($count < $resultsPerPage && $data = $goExecute->fetch()) {
 							echo "<div class='well'>";
 							echo "<strong>".($count+1)."</strong>";
 							echo "<hr>";
