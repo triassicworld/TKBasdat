@@ -48,7 +48,7 @@
                 </ul>
             </div>
             
-            <div id="right_bar"> 
+            <div id="left_bar"> 
                 <form action="#" id="cart_form" name="cart_form">
                     <div class="cart-info"></div>
                     <div class="cart-total">
