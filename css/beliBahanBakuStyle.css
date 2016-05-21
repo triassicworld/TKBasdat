@@ -1,5 +1,5 @@
 
-#wrap{ width:200px; height:auto; position:relative;}
+#wrap{ width:200px; height:auto; top: 20px; position:relative;}
 #wrap ul{ margin:0px; padding:0px; text-align:center }
 
 #wrap ul li{ 
@@ -17,10 +17,11 @@
 	position:relative;
 	padding-top:10px;
 	padding-bottom:10px;
-	background:#d4d4d4;
+	background:transparent;
 	color: black;
 	margin: 5px;
 }
+
 img#cart
 { 
 	bottom:0px;position:fixed; margin-left:30px; /* keep the bar on top  */
@@ -31,9 +32,9 @@ img#cart
 #left_bar
 {
 	top:120px; 
-	right:50px;
+	right:0px;
 	height:350px;
-	width:250px;
+	width:300px;
 	position:absolute;
 	padding:10px;
 }
