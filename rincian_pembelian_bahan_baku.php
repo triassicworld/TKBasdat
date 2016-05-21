@@ -46,7 +46,6 @@
 						while ($i < $arLen) {
 							$i++;
 							echo "<tr>";
-                            $sql = "INSERT INTO foodie.pembelian_bahan_baku (namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES (";
 
 							echo "<td>";
 							echo $array_rincian[$i]; // nama bahan
@@ -73,6 +72,7 @@
 							echo "</td>";
 							$e = $array_rincian[$i++];
 							
+                            $sql = "INSERT INTO foodie.pembelian_bahan_baku (namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES (";
 							$sql .= "'".$a."','742220',".$d.",'".$c."',".$b.");";
                             // $goExec = $conn->prepare($sql);
                             // $goExec->execute();
