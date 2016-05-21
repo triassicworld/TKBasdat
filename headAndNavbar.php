@@ -7,10 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>TK Basdat</title>
+    <title>Basdat - A12</title>
 
     <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link href="css/beliBahanBakuStyle.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -18,14 +19,16 @@
     <!-- jQuery -->
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.livequery.js"></script>
+    
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
     <!-- Javascript -->
     <script type="text/javascript" src="js/myScript.js" ></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="background-color:yellow">
       <div class="container-fluid">
         <!-- Mobile display -->
         <div class="navbar-header">
@@ -35,7 +38,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="home_kasir.php">TK Basdat</a>
+          <a class="navbar-brand" href="home_kasir.php">Basdat - A12</a>
         </div>
 
         <!-- Navbar links -->

@@ -1,4 +1,4 @@
-<div id="bottom_of_page" class="bg-primary">
+<div id="bottom_of_page" class="bg-primary" style="background-color:yellow">
     <br>
 </div>
 
