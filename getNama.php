@@ -20,6 +20,7 @@
     $row = $goExecute->fetch();
 
 	$role = $row['role'];
+    $nama = $row['nama'];
     $yeay = "";
 
 	if($role === "KS") {
@@ -34,5 +35,4 @@
 	else {
 		$yeay = "Manager";
 	}
-	
 ?>
