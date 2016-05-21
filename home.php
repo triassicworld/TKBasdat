@@ -12,15 +12,6 @@
                         <?php echo " <span style='color:blue'>".$yeay." ".$nama."</span>"; ?>
                     </h3>
                 </div>
-                <div>
-                    <form action = "logout.php">
-						<input type = "submit" value = "Log Out"></input>
-					</form>
-                </div>
-				<div id = "menubar">
-					<a href = "home_chef.php">Home</a><br>
-					<a href = "lihat_menu.php">Lihat Menu</a>
-				</div>
             </div>
         </div>
     </div>
@@ -35,69 +26,61 @@
 
 				    $conn3 = connectDB();
 
-                    // pg_select_db($database, $bd) or die("Database Not Found");
                     if($yeay == "Chef") {
-						$que=pg_query($bd, "SELECT * FROM menu_harian ORDER BY `waktu` DESC");                    
-						if($que === FALSE) { 
-							die(pg_error()); 
-						}
+						$sql = "SELECT * FROM foodie.menu_harian ORDER BY waktu DESC";                    
 						
+                    	$goExe = $conn3->prepare($sql);
+	                    $goExe->execute();	                    
+
 						$count = 0;
-						while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
-								echo "<div class='well'>";
-								echo "<strong>".($count+1)."</strong>";
-								echo "<hr>";
-								echo "Nama menu : <span style='color:red'>".$data['NAMAMENU']."</span>";
-								echo "<br>Waktu : <strong>".$data['WAKTU']."</strong>";
-								echo "<br>Jumlah : <strong>".$data['JUMLAH']."</strong>";
-								echo "<br>Email chef : ".$data['EMAILCHEF'];
-								echo "</div>";
-								$count++;
-						}
-					}
-					else if ($yeay == "Kasir") {
-						$que=pg_query($bd, "SELECT * FROM pemesanan ORDER BY `waktupesan` DESC");                    
-						if($que === FALSE) { 
-							die(pg_error()); 
-						}
-						
-						$count = 0;
-						while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
+						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
 							echo "<div class='well'>";
 							echo "<strong>".($count+1)."</strong>";
 							echo "<hr>";
-							echo "Nomor Nota : <span style='color:red'>".$data['NOMORNOTA']."</span>";
-							echo "<br>Waktu Pesan : <strong>".$data['WAKTUPESAN']."</strong>";
-							echo "<br>Waktu Bayar : <strong>".$data['WAKTUBAYAR']."</strong>";
-							echo "<br>Total : <strong>Rp ".$data['TOTAL'].",-</strong>";
-							echo "<br><br>Email kasir : ".$data['EMAILKASIR'];
-							echo "<br>Mode bayar : ".$data['MODE'];
+							echo "Nama menu : <span style='color:red'>".$data['namamenu']."</span>";
+							echo "<br>Waktu : <strong>".$data['waktu']."</strong>";
+							echo "<br>Jumlah : <strong>".$data['jumlah']."</strong>";
+							echo "<br>Email chef : ".$data['emailchef'];
+							echo "</div>";
+							$count++;
+						}
+					}
+					else if ($yeay == "Kasir") {
+						$sql = "SELECT * FROM foodie.pemesanan ORDER BY waktupesan DESC";                    
+						
+                    	$goExe = $conn3->prepare($sql);
+	                    $goExe->execute();	                    
+
+						$count = 0;
+						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
+							echo "<div class='well'>";
+							echo "<strong>".($count+1)."</strong>";
+							echo "<hr>";
+							echo "Nomor Nota : <span style='color:red'>".$data['nomornota']."</span>";
+							echo "<br>Waktu Pesan : <strong>".$data['waktupesan']."</strong>";
+							echo "<br>Waktu Bayar : <strong>".$data['waktubayar']."</strong>";
+							echo "<br>Total : <strong>Rp ".$data['total'].",-</strong>";
+							echo "<br><br>Email kasir : ".$data['emailkasir'];
+							echo "<br>Mode bayar : ".$data['mode'];
 							echo "</div>";
 							$count++;
 						}
 					}
 					else if ($yeay == "Staf") {
-						// $sql = pg_query($bd, "SELECT * FROM pembelian ORDER BY waktu DESC");
-						$sql = "SELECT * FROM pembelian ORDER BY waktu DESC";
+						$sql = "SELECT * FROM foodie.pembelian ORDER BY waktu DESC";
 
-					    $conn3->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-					    $goExe = $conn3->query($sql);
-					    // $goExe->execute();
-                    
-						// if($que === FALSE) { 
-						// 	die("Ada Error"); 
-						// }
-						
+                    	$goExe = $conn3->prepare($sql);
+	                    $goExe->execute();	                    
+
 						$count = 0;
-						// while ($count < $resultsPerPage && $data = pg_fetch_array($que)) {
-						while ($count < $resultsPerPage && ($data = $goExe->fetch(PDO::FETCH_ASSOC))) {
+						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
 							echo "<div class='well'>";
 							echo "<strong>".($count+1)."</strong>";
 							echo "<hr>";
-							echo "Nomor nota : <span style='color:red'>".$data['NOMORNOTA']."</span>";
-							echo "<br>Waktu : <strong>".$data['WAKTU']."</strong>";
-							echo "<br>Supplier : <strong>".$data['NAMASUPPLIER']."</strong>";
-							echo "<br><br>Email staf : ".$data['EMAILSTAFF'];
+							echo "Nomor nota : <span style='color:red'>".$data['nomornota']."</span>";
+							echo "<br>Waktu : <strong>".$data['waktu']."</strong>";
+							echo "<br>Supplier : <strong>".$data['namasupplier']."</strong>";
+							echo "<br><br>Email staf : ".$data['emailstaff'];
 							echo "</div>";
 							$count++;
 						}
