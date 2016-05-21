@@ -20,101 +20,44 @@
                         </ul>
                     </div>
                 </form>
-
-                <div class="well">
-                    <form action="beli_bahan_makanan.php">
-                        <table border="1" style="width:100%">
-                            <tr>
-                                <th>Nama Bahan</th>
-                                <th>Harga Satuan</th>
-                                <th>Satuan</th>
-                                <th>Jumlah</th>
-                                <th>Total</th>
-                            </tr>
-                            <?php
-                                if (isset($_GET['tambahBahan'])) {
-                                    runMyFunction();
-                                }
-
-                                function runMyFunction() {
-                                    include('tambah_bahan.php');
-                                }
-								if (isset($_GET['simpanBahan'])) {
-									header('Location : rincian_pembelian_bahan_makanan.php');
-								}
-                            ?>
-                        </table>
-                        
-                        <input type="submit" class="btn btn-default" name="tambahBahan" value="Tambah Bahan"/>
-                        <input type="submit" class="btn btn-default" name="simpanBahan" value="Simpan" />
-                    </form>
-                </div>
             </div>
         </div>
-    </div>
+    
+        <div align="left">
+            <div id="wrap" align="left">
+                <ul>
+                    <?php
+                        $conn = connectDB();
 
-    <div align="left">
-        <div id="wrap" align="left">
-            <ul>
-                <?php
-                    $conn = connectDB();
+                        $sql = "SELECT * FROM foodie.bahan_baku";
+                        
+                        $goExec = $conn->prepare($sql);
+                        $goExec->execute();
+                        
+                        $row = "";
+                        $id = 1;
 
-                    $sql = "SELECT * FROM foodie.pembelian_bahan_baku";
-                    
-                    $goExec = $conn->prepare($sql);
-                    $goExec->execute();
-                    
-                    $bb = "";
-                    $id = 1;
-
-                    while($bb = $goExec->fetch()) {
-                        echo "<li id='".$id."'><div>";
-                        echo "<span class='name'>".$bb['namabahanbaku']."</span>";
-                        echo " - Rp <span class='price'>".$bb['hargasatuan']."</span>";
-                        echo "</div></li>";
-                        $id++;
-                    }
-                ?>
-                <li id="1">
-                    <div><span class="name">Mac/OS X </span>: $<span class="price">800</span> </div>
-                </li>
-                <li id="2">
-                    <div><span class="name">IPhone 3GS </span>: $<span class="price">500 </span></div>
-                </li>
-                <li id="3">
-                    <div><span class="name">Apple IPad </span>: $<span class="price">450</span></div>
-                </li>
-                <li id="4">
-                    <div><span class="name">Mac NoteBook </span>: $<span class="price">1200 </span></div>
-                </li>
-                <li id="5">
-                    <div> <span class="name">Bag : Buy Now Price </span>: $<span class="price">65</span></div>
-                </li>
-                <li id="6">
-                    <div><span class="name">IPhone 4GS </span>: $<span class="price">800</span> </div>
-                </li>
-                <li id="7">
-                    <div><span class="name"> Bag : Buy Now Price </span>: $<span class="price">45</span></div>
-                </li>
-                <li id="8">
-                    <div><span class="name">Mac NoteBook </span>: $<span class="price">900 </span></div>
-                </li>
-                <li id="9">
-                    <div><span class="name">Sony Super Ear Phone </span>: $<span class="price">20</span></div>
-                </li>
-            </ul>
+                        while($row = $goExec->fetch()) {
+                            echo "<li id='".$id."'><div>";
+                            echo "<span class='namaBahan'>".$row['nama']."</span>";
+                            echo " - Rp <span class='price'>2500</span>";
+                            echo "</div></li>";
+                            $id++;
+                        }
+                    ?>
+                </ul>
+            </div>
+            
+            <div id="right_bar"> 
+                <form action="#" id="cart_form" name="cart_form">
+                    <div class="cart-info"></div>
+                    <div class="cart-total">
+                        <b>Total Harga:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> Rp <span>0</span>
+                        <input type="hidden" name="total-hidden-charges" id="total-hidden-charges" value="0" />
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="Submit">Simpan</button>
+                </form>
+            </div> 
         </div>
-        
-        <div id="left_bar"> 
-            <form action="#" id="cart_form" name="cart_form">
-                <div class="cart-info"></div>
-                <div class="cart-total">
-                    <b>Total Charges:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> $<span>0</span>
-                    <input type="hidden" name="total-hidden-charges" id="total-hidden-charges" value="0" />
-                </div>
-                <button type="submit" id="Submit">CheckOut</button>
-            </form>
-        </div> 
     </div>
-
 <?php include('footer.php'); ?>
