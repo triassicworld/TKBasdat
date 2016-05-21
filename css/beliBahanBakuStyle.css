@@ -1,23 +1,13 @@
 
-html, body{
-	margin:0;
-	padding:0;
-	border:0;
-	outline:0;
-}
-
-#wrap{ width:200px; height:auto; top:20px; position:relative; bottom:auto;
-  }
+#wrap{ width:200px; height:auto; position:relative;}
 #wrap ul{ margin:0px; padding:0px; text-align:center }
 
 #wrap ul li{ 
 	-moz-background-clip: padding;     /* Firefox 3.6 */
 	-webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
 	background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
-	border: 2px solid rgba(0,0,0,0.3);
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 0px; 
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
 }
 
 #wrap ul li div{ 
@@ -25,102 +15,44 @@ html, body{
 	text-align:center;
 	width:auto;
 	position:relative;
-	background:#000;
-	color: white;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top:10px;
+	padding-bottom:10px;
+	background:#d4d4d4;
+	color: black;
+	margin: 5px;
+}
+img#cart
+{ 
+	bottom:0px;position:fixed; margin-left:30px; /* keep the bar on top  */
 }
 
 #wrap ul li { cursor:pointer;}
 
-#right_bar 
+#left_bar
 {
 	top:120px; 
-	right:200px;
+	right:50px;
 	height:350px;
 	width:250px;
-	position:fixed;
+	position:absolute;
 	padding:10px;
 }
-em{ font-style:normal; }
 
 .cart-total{ background:#E8E8E8}
 
 .shopp,.cart-total{ 
 	border:solid #ccc 1px; 
 	padding:8px; 
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px; 
-	font-size:12px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
 	background:url(remove.png) center right no-repeat 5px;
-	border-radius: 8px; 
-	font-family:"LubalGraphBdBTBold",Tahoma; 
 	margin-bottom:3px;
 	width:260px;
-	background-color:#d4d4d4;
-	}
+}
 	
 div.shopp span{float:left;}	
-div.shopp div.label{ width:130px; float:left; color: black;}		
+div.shopp div.label{ width:130px; float:left; color: black}		
 div.shopp div.shopp-price{ width:70px; float:left;}
 .quantity{ float:left; margin-top:-3px; width:20px;}
-img.remove{float:right;cursor:pointer; width: 15px; height: 15px;}
+img.remove{float:right; cursor:pointer; width: 15px; height: 15px;}
 .cart-total b{width:130px;}
-
-
-
-
-h2{text-shadow: 0px -1px 0px #374683;text-shadow: 0px 1px 0px #e5e5ee;
-filter: dropshadow(color=#e5e5ee,offX=0,offY=1); 
-font-family:"Courier New", Courier, monospace; margin:0px;}
-a.tuts,span.tuts{
-color:#ff0000; font-size:13px; float:left; margin-right:15px; margin-left:15px;
-text-shadow: 0px -1px 0px #374683;text-shadow: 0px 1px 0px #e5e5ee;
-filter: dropshadow(color=#e5e5ee,offX=0,offY=1);
-margin-top:4px;
-font-family:"Courier New", Courier, monospace;
-}
-.delicious {
-	background:url("http://demos.99points.info/assets/delici.jpg") no-repeat scroll 10px bottom transparent;
-	border-left:1px solid #DEDEDE;
-	float:left;
-	margin-top:3px;
-	padding-left:30px;
-	text-shadow: 0px -1px 0px #374683;text-shadow: 0px 1px 0px #e5e5ee;
-	filter: dropshadow(color=#e5e5ee,offX=0,offY=1); 
-	font-family:"Courier New", Courier, monospace;
-}
-.delicious a{font-size:13px;
-	line-height:18px;}
-.title{ background:#D2ECFB; padding-left:10px; padding:4px;}
-.shareButtons{ background:#FFF5DF; margin:0px; padding:8px;}
-
-.tweetThis {
-	background:url("http://demos.99points.info/assets/twit.png") no-repeat scroll 8px top transparent;
-	border-left:1px solid #DEDEDE;
-	float:left;
-	font-size:12px;
-	margin-left:8px;
-	text-shadow: 0px -1px 0px #374683;text-shadow: 0px 1px 0px #e5e5ee;
-	filter: dropshadow(color=#e5e5ee,offX=0,offY=1); 
-	font-family:"Courier New", Courier, monospace;
-	line-height:18px;
-	margin-top:3px;
-	padding-left:30px;float:left;
-}
-
-.digg{
-	text-shadow: 0px -1px 0px #374683;text-shadow: 0px 1px 0px #e5e5ee;
-	filter: dropshadow(color=#e5e5ee,offX=0,offY=1); 
-	font-family:"Courier New", Courier, monospace;
-	padding:4px; color:#000000; font-size:12px;
-	margin-top:2px; float:left
-}
-#bookmarks{	margin-top:3px; float:left}
-#bookmarks a{
-	text-shadow: 0px -1px 0px #374683;text-shadow: 0px 1px 0px #e5e5ee;
-	filter: dropshadow(color=#e5e5ee,offX=0,offY=1); 
-	font-family:"Courier New", Courier, monospace;
-	color:#000000; font-size:14px; font-weight:bold;
-	padding-left:20px; 
-}
