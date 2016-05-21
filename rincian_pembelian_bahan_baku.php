@@ -46,23 +46,45 @@
 						while ($i < $arLen) {
 							$i++;
 							echo "<tr>";
-							while(($i % 6) > 0) {
-								echo "<td>";
-								echo $array_rincian[$i];
-								echo "</td>";
-								$i++;
-							}
+                            $sql = "INSERT INTO foodie.pembelian_bahan_baku (namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES (";
+
+							echo "<td>";
+							echo $array_rincian[$i]; // nama bahan
+							echo "</td>";
+							$a = $array_rincian[$i++];
+
+							echo "<td>";
+							echo $array_rincian[$i]; // harga per satuan
+							echo "</td>";
+							$b = $array_rincian[$i++];
+
+							echo "<td>";
+							echo $array_rincian[$i]; // satuan
+							echo "</td>";
+							$c = $array_rincian[$i++];
+
+							echo "<td>";
+							echo $array_rincian[$i]; // jumlah
+							echo "</td>";
+							$d = $array_rincian[$i++];
+
+							echo "<td>";
+							echo $array_rincian[$i]; // total harga
+							echo "</td>";
+							$e = $array_rincian[$i++];
+							
+							$sql .= "'".$a."','742220',".$d.",'".$c."',".$b.");";
+                            // $goExec = $conn->prepare($sql);
+                            // $goExec->execute();
+							
 							echo "</tr>";
 						}
 					}
 
-                                // $sql = "INSERT INTO foodie.pembelian_bahan_baku (namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES ('Wortel', '132116', 5, 'gram', 123);";
-                                
-                                // $goExec = $conn->prepare($sql);
-                                // $goExec->execute();
 				?>
 			</tbody>
 		</table>
+		<?php echo $sql; ?>
 	</center>
 	
 <?php 
