@@ -17,6 +17,7 @@
 
 	<center>
 		<h3>FOODIE - RINCIAN PEMBELIAN BAHAN MAKANAN</h3>
+		<br>
 		<!-- <h5>Nomor Nota: <?php #echo $noNota; ?></h5> -->
 		<h5>Nomor Nota: <?php echo '742220'; ?></h5>
 		<h5>Supplier: <?php echo $namaSupplier; ?></h5>
@@ -74,6 +75,7 @@
 							
                             $sql = "INSERT INTO foodie.pembelian_bahan_baku (namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES (";
 							$sql .= "'".$a."','742220',".$d.",'".$c."',".$b.");";
+                            
                             // $goExec = $conn->prepare($sql);
                             // $goExec->execute();
 							
@@ -84,7 +86,6 @@
 				?>
 			</tbody>
 		</table>
-		<?php echo $sql; ?>
 	</center>
 	
 <?php 
