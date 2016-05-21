@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>TK Basdat</title>
+    <title>Basdat - A12</title>
     <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -25,6 +25,13 @@
 </head>
 
 <body>
+    <div id="bottom_of_page" class="bg-primary" style="background-color:yellow">
+        <br>
+        <br>
+    </div>
+    <br>
+    <br>
+
     <!-- Log In -->
     <div id="login" class="container">
         <div class="row">
@@ -37,7 +44,7 @@
                             <input type="email" placeholder="Email" class="form-control" id="email" name="email"/><br>
                             Password<br>
                             <input value="" placeholder="Password" class="form-control" id="password" type="password" name="password" /><br><br>
-                            <input id="button" class="btn btn-primary" name="enter" type="submit" value="Enter">
+                            <input id="button" class="btn btn-primary" name="enter" type="submit" value="Enter" style="color:black;background-color:yellow">
                         </div>
                     </form>
                     <?php echo "<span style='color:red'>".$resp."</span>"; ?>
@@ -48,9 +55,5 @@
 
     <br>
     <br>
-
-    <div id="bottom_of_page" class="bg-primary">
-        <br>
-    </div>
 
 <?php include('footer.php'); ?>
