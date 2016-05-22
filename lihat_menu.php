@@ -31,14 +31,6 @@
 						echo " <span style='color:blue'>".$yeay." ".$nama."</span>"; ?>
                     </h3>
                 </div>
-                <div>
-                    <form action = "logout.php">
-						<input type = "submit" value = "Log Out"></input>
-					</form>
-                </div>
-				<div id = "lihat_menu">
-					<a href = "home_chef.php">Back to Home</a><br>
-				</div>
             </div>
         </div>
     </div>
@@ -50,41 +42,35 @@
                 <!-- <div class="well"> -->
 				<div>
 					<form method="GET" action="lihat_menu.php">
-					<input name = 'tanggal' type = 'date' value = 'tes'></input>
+					<input name = 'tanggal' type = 'date' value = 'tes'></input> <br>
 					<input type = 'submit'></input> 
 					</form>
 				</div>
 				<?php
-                    $hostname = "localhost";
-                    $user = "root";
-                    $password = "";
-                    $database = "foodie";
                     //Loadmore configuarion
                     $resultsPerPage = 15;
-                    $bd = mysql_connect($hostname, $user, $password) or die("Failed to connect to database");
+					$conn = connectDB();
+
 					if(isset($_GET["tanggal"])){
-						mysql_select_db($database, $bd) or die("Database Not Found");
-						$que=mysql_query("SELECT * FROM MENU WHERE nama IN(SELECT namamenu FROM MENU_HARIAN WHERE WAKTU BETWEEN $date1 AND $date2 )ORDER BY NAMA ASC");
-						
-						if($que === FALSE) { 
-							die(mysql_error()); 
-						}
-						
+						$que="SELECT * FROM foodie.menu WHERE nama IN(SELECT namamenu FROM foodie.menu_harian WHERE WAKTU BETWEEN $date1 AND $date2 )ORDER BY nama ASC";
+						$goExe = $conn->prepare($que);
+	                    $goExe->execute();
 						$count = 0;
-						while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
-							// if ($data['EMAILKASIR'] == $emailSession) {
-								echo "<div class='well'>";
-								echo "<strong>".($count+1)."</strong>";
-								echo "<hr>";
-								echo "Nama : <span style='color:red'>".$data['NAMA']."</span>";
-								echo "<br>Deskripsi : <strong>".$data['DESKRIPSI']."</strong>";
-								echo "<br>Harga : <strong>".$data['HARGA']."</strong>";
-								echo "<br>Jumlah Tersedia : <strong>".$data['JUMLAHTERSEDIA']."</strong>";
-								echo "<br>Kategori : ".$data['KATEGORI'];
-								echo "<br><a href = 'lihat.php'> LIHAT </a>";
-								echo "</div>";
-								$count++;
-							// }
+
+						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
+							echo "<div class='well'>";
+							echo "<strong>".($count+1)."</strong>";
+							echo "<hr>";
+							echo "Nama : <span style='color:red'>".$data['nama']."</span>";
+							echo "<br>Deskripsi : <strong>".$data['deskripsi']."</strong>";
+							echo "<br>Harga : <strong>".$data['harga']."</strong>";
+							echo "<br>Jumlah Tersedia : <strong>".$data['jumlahtersedia']."</strong>";
+							echo "<br>Kategori : ".$data['kategori'];
+							echo "<form action='lihat.php' method='GET'>
+							<input type='hidden' name='nama' value=".$data['nama']."> 
+							<input type='submit' value='Lihat'> </form> ";
+							echo "</div>";
+							$count++;
 						}
 					}
                 ?>
