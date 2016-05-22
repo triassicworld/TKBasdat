@@ -1,0 +1,9 @@
+-- Trigger: updatestok on foodie.pembelian_bahan_baku
+
+-- DROP TRIGGER updatestok ON foodie.pembelian_bahan_baku;
+
+CREATE TRIGGER updatestok
+  AFTER INSERT OR UPDATE
+  ON foodie.pembelian_bahan_baku
+  FOR EACH ROW
+  EXECUTE PROCEDURE foodie.updatestok();

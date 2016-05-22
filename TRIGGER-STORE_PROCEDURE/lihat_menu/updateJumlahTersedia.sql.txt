@@ -1,0 +1,33 @@
+-- Function: foodie.updatejumlahtersedia()
+
+-- DROP FUNCTION foodie.updatejumlahtersedia();
+
+CREATE OR REPLACE FUNCTION foodie.updatejumlahtersedia()
+  RETURNS trigger AS
+$BODY$
+
+BEGIN
+	IF ((TG_OP = 'INSERT') or (TG_OP = 'UPDATE')) THEN 
+	UPDATE menu SET jumlahtersedia = (select jumlahtersedia from menu where nama = new.namamenu) + 
+	(select jumlah from menu_harian where waktu = new.waktu and namamenu = new.namamenu) WHERE nama = new.namamenu;
+	RETURN NEW;
+	
+	ELSEIF (TG_OP = 'DELETE') THEN
+	UPDATE menu SET jumlahtersedia = (select jumlahtersedia from menu where nama = old.namamenu) - 
+	(select jumlah from menu_harian where waktu = old.waktu and namamenu = old.namamenu) WHERE nama = old.namamenu;
+
+		IF ((select jumlahtersedia from menu where nama = old.namamenu) < 0) THEN	
+		UPDATE menu SET jumlahtersedia = 0 WHERE nama = old.namamenu;
+		END IF;
+	
+	RETURN OLD;
+
+	END IF;
+
+	
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION foodie.updatejumlahtersedia()
+  OWNER TO postgres;

@@ -1,0 +1,18 @@
+-- Function: foodie.updatestok()
+
+-- DROP FUNCTION foodie.updatestok();
+
+CREATE OR REPLACE FUNCTION foodie.updatestok()
+  RETURNS trigger AS
+$BODY$
+begin
+if (TG_OP = 'INSERT') or (TG_OP = 'UPDATE') then
+update bahan_baku set stok = (select stok from bahan_baku where nama = new.namabahanbaku) + (select jumlahpembelian from pembelian_bahan_baku where notapembelian=new.notapembelian and namabahanbaku = new.namabahanbaku) where nama=new.namabahanbaku;
+return new;
+end if;
+end;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION foodie.updatestok()
+  OWNER TO postgres;

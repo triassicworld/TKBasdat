@@ -1,0 +1,9 @@
+-- Trigger: updatejumlahtersedia on foodie.menu_harian
+
+-- DROP TRIGGER updatejumlahtersedia ON foodie.menu_harian;
+
+CREATE TRIGGER updatejumlahtersedia
+  AFTER INSERT OR UPDATE
+  ON foodie.menu_harian
+  FOR EACH ROW
+  EXECUTE PROCEDURE foodie.updatejumlahtersedia();
