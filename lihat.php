@@ -3,22 +3,33 @@
 	include ('headAndNavbar.php');
 ?>
 
-<div>
-	<form action = "logout.php">
-		<input type = "submit" value = "Log Out"></input>
-	</form>
-</div>
 
 <div>
-	<h3>Nama makanan</h3>
+<?php
 	
-	<p>
-		Gambar : <br>
-		Deskripsi : <br>
-		Harga : <br>
-		Tersedia : <br>
-		Kategori : <br>
-	</p>
+	if(isset($_GET['nama']))
+	{
+		$conn = connectDB();
+		
+		
+		$nama = $_GET['nama'];
+		$sql = "SELECT * FROM FOODIE.MENU WHERE NAMA='$nama'";
+		
+		$goExe = $conn->prepare($sql);
+	    $goExe->execute();	        
+		//$result = pg_query($conn, $sql);
+		if($row = $goExe->fetch())
+		{	
+			echo "<h3>Nama makanan : ".$row['nama']."</h3>";		
+			echo "<p>Gambar : ".$row['gambar']."<br>
+				Deskripsi : ".$row['deskripsi']."<br>
+				Harga : ".$row['harga']."<br>
+				Tersedia : ".$row['jumlahtersedia']."<br>
+				Kategori : ".$row['kategori']."<br>
+			</p>";
+		}
+	}
+?>
 </div>
 
 <?php
