@@ -19,75 +19,121 @@
     <div id="" class="container">
         <div class="row">
             <hr>
-            <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
                 <?php 
                     //Loadmore configuarion
                     $resultsPerPage = 10;
-
 				    $conn3 = connectDB();
-
                     if($yeay == "Chef") {
 						$sql = "SELECT * FROM foodie.menu_harian ORDER BY waktu DESC";                    
 						
-                    	$goExe = $conn3->prepare($sql);
-	                    $goExe->execute();	                    
-
+                    	$goExec = $conn3->prepare($sql);
+	                    $goExec->execute();	                    
 						$count = 0;
-						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
-							echo "<div class='well'>";
-							echo "<strong>".($count+1)."</strong>";
-							echo "<hr>";
-							echo "Nama menu : <span style='color:red'>".$data['namamenu']."</span>";
-							echo "<br>Waktu : <strong>".$data['waktu']."</strong>";
-							echo "<br>Jumlah : <strong>".$data['jumlah']."</strong>";
-							echo "<br>Email chef : ".$data['emailchef'];
-							echo "</div>";
-							$count++;
-						}
+						
+						$bb = "";
+	                    $id = 1;
+
+	                    echo '<table class="table">
+	                            <thead>
+	                              <tr>
+	                                <th>Nama Menu</th>
+	                                <th>Waktu</th>
+	                                <th>Jumlah</th>
+	                                <th>Email Chef</th>
+	                              </tr>
+	                            </thead><tbody>';
+
+	                    $count = 0;
+	                    while(($bb = $goExec->fetch()) && $count<10) {
+	                        
+	                        echo'<tr>
+	                                <td>'.$bb['namamenu'].'</td>
+	                                <td>'.$bb['waktu'].'</td>
+	                                <td>'.$bb['jumlah'].'</td>
+	                                <td>'.$bb['emailchef'].'</td>
+	                            </tr>
+	                          ';
+	                          $count++;
+	                    }
+	                    echo '<tbody></table>';
 					}
 					else if ($yeay == "Kasir") {
 						$sql = "SELECT * FROM foodie.pemesanan ORDER BY waktupesan DESC";                    
 						
-                    	$goExe = $conn3->prepare($sql);
-	                    $goExe->execute();	                    
-
+                    	$goExec = $conn3->prepare($sql);
+	                    $goExec->execute();	                    
 						$count = 0;
-						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
-							echo "<div class='well'>";
-							echo "<strong>".($count+1)."</strong>";
-							echo "<hr>";
-							echo "Nomor Nota : <span style='color:red'>".$data['nomornota']."</span>";
-							echo "<br>Waktu Pesan : <strong>".$data['waktupesan']."</strong>";
-							echo "<br>Waktu Bayar : <strong>".$data['waktubayar']."</strong>";
-							echo "<br>Total : <strong>Rp ".$data['total'].",-</strong>";
-							echo "<br><br>Email kasir : ".$data['emailkasir'];
-							echo "<br>Mode bayar : ".$data['mode'];
-							echo "</div>";
-							$count++;
-						}
+						
+						$bb = "";
+	                    $id = 1;
+
+	                    echo '<table class="table">
+	                            <thead>
+	                              <tr>
+	                                <th>Nomor Nota</th>
+	                                <th>Waktu Pesan</th>
+	                                <th>Waktu Bayar</th>
+	                                <th>Total</th>
+	                                <th>Kasir</th>
+	                                <th>Mode Bayar</th>
+	                                <th></th>
+	                              </tr>
+	                            </thead><tbody>';
+
+	                    $count = 0;
+	                    while(($bb = $goExec->fetch()) && $count<10) {
+	                        
+	                        echo'<tr>
+	                                <td>'.$bb['nomornota'].'</td>
+	                                <td>'.$bb['waktupesan'].'</td>
+	                                <td>'.$bb['waktubayar'].'</td>
+	                                <td>'.$bb['total'].'</td>
+	                                <td>'.$bb['emailkasir'].'</td>
+	                                <td>'.$bb['mode'].'</td>
+	                                <td><a href="rincian_pemesanan_makanan.php?nomornota='.$bb['nomornota'].'">RINCIAN<a></td>
+	                            </tr>
+	                          ';
+	                          $count++;
+	                    }
+	                    echo '<tbody></table>';
 					}
 					else if ($yeay == "Staf") {
 						$sql = "SELECT * FROM foodie.pembelian ORDER BY waktu DESC";
-
-                    	$goExe = $conn3->prepare($sql);
-	                    $goExe->execute();	                    
-
+                    	
+                    	$goExec = $conn3->prepare($sql);
+	                    $goExec->execute();	                    
 						$count = 0;
-						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
-							echo "<div class='well'>";
-							echo "<strong>".($count+1)."</strong>";
-							echo "<hr>";
-							echo "Nomor nota : <span style='color:red'>".$data['nomornota']."</span>";
-							echo "<br>Waktu : <strong>".$data['waktu']."</strong>";
-							echo "<br>Supplier : <strong>".$data['namasupplier']."</strong>";
-							echo "<br><br>Email staf : ".$data['emailstaff'];
-							echo "</div>";
-							$count++;
-						}
+						
+						$bb = "";
+	                    $id = 1;
+
+	                    echo '<table class="table">
+	                            <thead>
+	                              <tr>
+	                                <th>Nomor Nota</th>
+	                                <th>Waktu</th>
+	                                <th>Supplier</th>
+	                                <th>Email Staf</th>
+	                                <th></th>
+	                              </tr>
+	                            </thead><tbody>';
+
+	                    $count = 0;
+	                    while(($bb = $goExec->fetch()) && $count<10) {
+	                        
+	                        echo'<tr>
+	                                <td>'.$bb['nomornota'].'</td>
+	                                <td>'.$bb['waktu'].'</td>
+	                                <td>'.$bb['namasupplier'].'</td>
+	                                <td>'.$bb['emailstaff'].'</td>
+	                                <td><a href="rincian_pemesanan_makanan.php?nomornota='.$bb['nomornota'].'">RINCIAN<a></td>
+	                            </tr>
+	                          ';
+	                          $count++;
+	                    }
+	                    echo '<tbody></table>';
 					}
-					
                 ?>
-            </div>
         </div>
     </div>
 
