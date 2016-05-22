@@ -2,9 +2,9 @@
     include('getNama.php');
     include('headAndNavbar.php');
 
-    $pertama = "inline";
-    $kedua = "none";
-    $ketiga = "none";
+    $pertama = (isset($_GET['step'])) ? 'none' : 'block';
+    $kedua = (!isset($_GET['step']) || $_GET['step'] != '2') ? 'none' : 'block';
+    $ketiga = (!isset($_GET['step']) || $_GET['step'] != '3') ? 'none' : 'block';
 
     $noNota = "";
     $supplierName = "";
@@ -15,7 +15,7 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 
                 <div id="isi_pertama" style="display:<?php echo $pertama; ?>;">
-                    <form action="beli_bahan_makanan.php" name="nota_form" method="POST">
+                    <form action="beli_bahan_makanan.php?step=2" name="nota_form" method="POST">
                         <p>Masukkan nomor nota</p>
                         <select name="submitNomorNota">
                             <?php
@@ -40,21 +40,14 @@
 
                     <?php
                         if(isset($_POST['submitNomorNota'])) {
-                            $pertama = "none";
-                            $kedua = "block";
-                            $ketiga = "none";
-
                             $noNota = $_POST['submitNomorNota'];
                         }
                     ?>
                 </div>
 
-                <br>
-                <br>
-                <br>
-
                 <div id="isi_kedua" style="display:<?php echo $kedua; ?>;">
-                    <form action="beli_bahan_makanan.php" name="supplier_form" method="POST">
+                    <?php echo "<h4>Nomor nota : " . $noNota . "</h4><br><br>"; ?>
+                    <form action="beli_bahan_makanan.php?step=3" name="supplier_form" method="POST">
                         <p>Pilih nama supplier</p>
                         <select name="namaSupplier">
                             <?php
@@ -74,24 +67,24 @@
                                 }
                             ?>
                         </select>
+                        <input type="hidden" name="submitNumNota" value="<?php echo $noNota; ?>">
                         <input type="submit" name="ok2" value="OK">
                     </form>
 
                     <?php
                         if(isset($_POST['namaSupplier'])) {
-                            $pertama = "none";
-                            $kedua = "none";
-                            $ketiga = "block";
-
                             $supplierName = $_POST['namaSupplier'];
+                            $noNota = $_POST['submitNumNota'];
                         }
                     ?>
                 </div>
             
                 <div id="isi_ketiga" style="display:<?php echo $ketiga; ?>;">
+                    <?php echo "<h4>Nomor nota : " . $noNota . "</h4><br>"; ?>
+                    <?php echo "<h4>Nama supplier : " . $supplierName . "</h4><br>"; ?>
                     <div align="left">
                         <div id="wrap" align="left">
-                            <h3>Klik nama bahan baku untuk menambah ke cart</h3>
+                            <h5>Klik nama bahan baku untuk menambah ke cart</h5>
                             <ul class="list-group">
                                 <?php
                                     $conn = connectDB();
@@ -116,7 +109,8 @@
                             </ul>
                         </div>
                         
-                        <div id="left_bar"> 
+                        <div id="left_bar">
+                            <h4>Cart</h4>
                             <form action="rincian_pembelian_bahan_baku.php" id="cart_form" name="cart_form" method="POST">
                                 <div class="cart-info"></div>
                                 <div class="cart-total">

@@ -42,7 +42,7 @@ $(document).ready(function() {
 			$('.cart-total span').html(prev_charges);
 
 			$('#total-hidden-charges').val(prev_charges);
-			$('#rincian-hidden').val(Rincian);
+			$('#rincian-hidden').val(JSON.stringify(Rincian));
 		}
 		else
 		{
@@ -55,7 +55,7 @@ $(document).ready(function() {
 			$('.cart-total span').html(prev_charges);
 
 			$('#total-hidden-charges').val(prev_charges);
-			$('#rincian-hidden').val(Rincian);
+			$('#rincian-hidden').val(JSON.stringify(Rincian));
 			
 			$('#left_bar .cart-info').append('<div class="shopp" id="each-'+thisID+'"><div class="label">'+itemname+'</div><div class="shopp-price"> Rp <em>'+itemprice+'</em></div><span class="shopp-quantity">1</span><img src="img/remove.ico" class="remove" /><br class="all" /></div>');
 			
@@ -79,7 +79,7 @@ $(document).ready(function() {
 		prev_charges = parseInt(prev_charges)-parseInt(deduct);
 		$('.cart-total span').html(prev_charges);
 		$('#total-hidden-charges').val(prev_charges);
-		$('#rincian-hidden').val(Rincian);
+		$('#rincian-hidden').val(JSON.stringify(Rincian));
 		$(this).parent().remove();
 	});
 	
