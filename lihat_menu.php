@@ -38,7 +38,6 @@
     <div id="" class="container">
         <div class="row">
             <hr>
-            <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
                 <!-- <div class="well"> -->
 				<div>
 					<form method="GET" action="lihat_menu.php">
@@ -57,25 +56,37 @@
 	                    $goExe->execute();
 						$count = 0;
 
-						while ($count < $resultsPerPage && ($data = $goExe->fetch())) {
-							echo "<div class='well'>";
-							echo "<strong>".($count+1)."</strong>";
-							echo "<hr>";
-							echo "Nama : <span style='color:red'>".$data['nama']."</span>";
-							echo "<br>Deskripsi : <strong>".$data['deskripsi']."</strong>";
-							echo "<br>Harga : <strong>".$data['harga']."</strong>";
-							echo "<br>Jumlah Tersedia : <strong>".$data['jumlahtersedia']."</strong>";
-							echo "<br>Kategori : ".$data['kategori'];
-							echo "<form action='lihat.php' method='GET'>
-							<input type='hidden' name='nama' value=".$data['nama']."> 
-							<input type='submit' value='Lihat'> </form> ";
-							echo "</div>";
-							$count++;
-						}
+						echo '	<div id="" class="container">
+					        	<div class="row">
+					        	<table class="table">
+					            <thead>
+					              <tr>
+					                <th>Nama</th>
+					                <th>Deskripsi</th>
+					                <th>Harga</th>
+					                <th>Jumlah Tersedia</th>
+					                <th>Kategori</th>
+					              </tr>
+					            </thead><tbody>';
+
+					    $count = 0;
+					    while(($bb = $goExe->fetch()) && $count < 15) {
+						        echo'<tr>
+					                <td>'.$bb['nama'].'</td>
+					                <td>'.$bb['deskripsi'].'</td>
+					                <td>'.$bb['harga'].'</td>
+					                <td>'.$bb['jumlahtersedia'].'</td>
+					                <td>'.$bb['kategori'].'</td>
+					                <td><a href="lihat.php?nama='.$bb['nama'].'">LIHAT<a></td>
+					            </tr>
+					          ';
+					          $count++;
+					    }
+					    echo '<tbody></table>';
 					}
                 ?>
                 <!-- </div> -->
-            </div>
+            
         </div>
     </div>
 
