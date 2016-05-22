@@ -39,57 +39,65 @@
     <div id="" class="container">
         <div class="row">
             <hr>
-            <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1 text-center">
-                <!-- <div class="well"> -->
-				<div>
+				<center><div>
 					<form method="GET" action="lihat_pemesanan_makanan.php">
 					<input name = 'tanggal' type = 'date' value = 'tes'></input>
 					<input type = 'submit'></input> 
 					</form>
-				</div>
-                <?php 
-                    $hostname = "localhost";
-                    $user = "root";
-                    $password = "";
-                    $database = "foodie";
+				</div></center>
+                <hr>
 
-                    //Loadmore configuarion
-                    $resultsPerPage = 15;
-                    $bd = mysql_connect($hostname, $user, $password) or die("Failed to connect to database");
-					if(isset($_GET["tanggal"])){
-						mysql_select_db($database, $bd) or die("Database Not Found");
+                <?php
+                    $conn = connectDB();
 
-						$que=mysql_query("SELECT * FROM `PEMESANAN` WHERE WAKTUPESAN BETWEEN $date1 AND $date2 ORDER BY `WAKTUPESAN` DESC");
-						
-						if($que === FALSE) { 
-							die(mysql_error()); 
-						}
-						
-						$count = 0;
-						while ($count < $resultsPerPage && $data = mysql_fetch_array($que)) {
-							// if ($data['EMAILKASIR'] == $emailSession) {
-								echo "<div class='well'>";
-								echo "<strong>".($count+1)."</strong>";
-								echo "<hr>";
-								echo "Nomor Nota : <span style='color:red'>".$data['NOMORNOTA']."</span>";
-								echo "<br>Waktu Pesan : <strong>".$data['WAKTUPESAN']."</strong>";
-								echo "<br>Waktu Bayar : <strong>".$data['WAKTUBAYAR']."</strong>";
-								echo "<br>Total : <strong>Rp ".$data['TOTAL'].",-</strong>";
-								echo "<br>Email kasir : ".$data['EMAILKASIR'];
-								echo "<br>Mode bayar : ".$data['MODE'];
-								echo "<br><a href = 'rincian_pemesanan_makanan.php'>Rincian</a>";
-								echo "</div>";
-								
-								$count++;
-							// }
-						}
-					}
+                    $sql = "SELECT * FROM foodie.pemesanan WHERE waktupesan BETWEEN ".$date1." AND ".$date2." ORDER BY waktupesan DESC";
+                    
+
+                    $goExec = $conn->prepare($sql);
+                    $goExec->execute();
+                    
+                    $bb = "";
+                    $id = 1;
+
+                    if($date1 != null){
+                        echo '<table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Nomor Nota</th>
+                                    <th>Waktu Pesan</th>
+                                    <th>Waktu Bayar</th>
+                                    <th>Total</th>
+                                    <th>Kasir</th>
+                                    <th>Mode Bayar</th>
+                                    <th></th>
+                                  </tr>
+                                </thead><tbody>';
+
+                        $count = 0;
+                        while(($bb = $goExec->fetch()) && $count < 15) {
+                            
+                            echo'<tr>
+                                    <td>'.$bb['nomornota'].'</td>
+                                    <td>'.$bb['waktupesan'].'</td>
+                                    <td>'.$bb['waktubayar'].'</td>
+                                    <td>'.$bb['total'].'</td>
+                                    <td>'.$bb['emailkasir'].'</td>
+                                    <td>'.$bb['mode'].'</td>
+                                    <td><a href="rincian_pemesanan_makanan.php?nomornota='.$bb['nomornota'].'">RINCIAN<a></td>
+                                </tr>
+                              ';
+                              $count++;
+                        }
+                        echo '<tbody></table>';
+
+                        if($count>15) {
+                            echo '<center><button>Next Page</button></center>';
+                        }
+                        echo ' <hr>';
+                    }
                 ?>
-                <!-- </div> -->
-            </div>
         </div>
     </div>
-	<center><button>Next Page</button></center>
 
 <!-- Footer -->
 <?php include('footer.php'); ?>
