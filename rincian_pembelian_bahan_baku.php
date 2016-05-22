@@ -4,6 +4,7 @@
 
 	$semua_rincian = "";
 	$harga_Total = "";
+	$result = "";
 
 	if(isset($_POST['SimpanRincian'])) {
 		$noNota = $_POST['submitNomorNota'];
@@ -72,20 +73,28 @@
 							echo $array_rincian[$i]; // total harga
 							echo "</td>";
 							$e = $array_rincian[$i++];
+							echo "</tr>";
 							
                             $sql = "INSERT INTO foodie.pembelian_bahan_baku (namabahanbaku, notapembelian, jumlahpembelian, satuanpembelian, hargasatuan) VALUES (";
 							$sql .= "'".$a."','742220',".$d.",'".$c."',".$b.");";
                             
-                            // $goExec = $conn->prepare($sql);
-                            // $goExec->execute();
-							
-							echo "</tr>";
+							$result = "";
+							try {
+	                            $goExec = $conn->prepare($sql);
+								
+								if($goExec) {
+									$aaa = $goExec->execute();
+								}
+							} catch (PDOExeption $e) {
+								$result = $e->getMessage();
+							}
 						}
 					}
 
 				?>
 			</tbody>
 		</table>
+		<?php echo $result; ?>
 	</center>
 	
 <?php 
