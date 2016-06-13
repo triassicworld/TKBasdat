@@ -2,8 +2,51 @@
     include('getNama.php');
     include('headAndNavbar.php');
 
-    $pertama = (isset($_GET['step'])) ? 'none' : 'block';
-    $kedua = (!isset($_GET['step']) || $_GET['step'] != '2') ? 'none' : 'block';
+    $resp = "";
+
+    if(isset($_GET['step']) && $_GET['step'] == '2') {
+    	if(isset($_POST['submitNomorNota'])) {
+	        $noNota = $_POST['submitNomorNota'];
+	    	
+	    	if(strlen($noNota) != 6) {
+	            $resp = "Nomor nota harus terdiri dari 6 karakter";
+	    	} else {
+	            $conn = connectDB();
+
+	            $sql = "SELECT nomornota FROM foodie.pembelian;";
+	            
+	            $goExec = $conn->prepare($sql);
+	            $goExec->execute();
+
+	            $row = "";
+	            $tmp = false;
+
+	            while($row = $goExec->fetch()) {
+	                if ($row['nomornota'] == $noNota) {
+	                	$tmp = true;
+	                	break 1;
+	                }
+	        	}
+
+	        	if($tmp) {
+	            	$resp = "Nomor nota sudah ada";
+	        	} else {
+	        		$_GET['alreadyExist'] = false;
+	        	}
+	        }
+		} else {
+			$resp = "Tolong tulis nomor nota";
+	    }
+	}
+	else if(isset($_GET['step']) && $_GET['step'] == '3') {
+		$_GET['alreadyExist'] = false;
+	}
+	else {
+		
+	}
+
+    $pertama = (isset($_GET['step']) && isset($_GET['alreadyExist'])) ? 'none' : 'block';
+    $kedua = ((!isset($_GET['step']) || $_GET['step'] != '2') || (!isset($_GET['alreadyExist']) || $_GET['alreadyExist'] != false)) ? 'none' : 'block';
     $ketiga = (!isset($_GET['step']) || $_GET['step'] != '3') ? 'none' : 'block';
 
     $noNota = "";
@@ -16,18 +59,19 @@
                 
                 <div id="isi_pertama" style="display:<?php echo $pertama; ?>;">
                     <form action="beli_bahan_makanan.php?step=2" name="nota_form" method="POST">
-                        <p>Masukkan nomor nota</p>
-                        <select name="submitNomorNota">
-                            <?php
-                                $conn = connectDB();
+                        <p>Masukkan nomor nota (6 digit)</p>
+                        <input type="text" name="submitNomorNota">
 
-                                $sql = "SELECT * FROM foodie.pembelian";
+                        <p>Pastikan nomor nota anda belum ada di list berikut:</p>
+                        <select>
+                        	<?php
+                                $conn = connectDB();
+                                $sql = "SELECT nomornota FROM foodie.pembelian ORDER BY nomornota ASC";
                                 
                                 $goExec = $conn->prepare($sql);
                                 $goExec->execute();
                                 
                                 $row = "";
-
                                 while($row = $goExec->fetch()) {
                                     echo "<option value='".$row['nomornota']."'>";
                                     echo $row['nomornota'];
@@ -35,18 +79,19 @@
                                 }
                             ?>
                         </select>
-                        <input type="submit" name="ok1" value="OK">
+                        <br>
+                        <?php 
+                        	echo "<span style='color:red'>".$resp."</span><br>";
+                        ?>
+                        <input type="submit" name="ok1" value="Create New Nota">
                     </form>
-
-                    <?php
-                        if(isset($_POST['submitNomorNota'])) {
-                            $noNota = $_POST['submitNomorNota'];
-                        }
-                    ?>
                 </div>
 
                 <div id="isi_kedua" style="display:<?php echo $kedua; ?>;">
-                    <?php echo "<h4>Nomor nota : " . $noNota . "</h4><br><br>"; ?>
+                    <?php
+			            $noNota = $_POST['submitNomorNota']; 
+                    	echo "<h4>Nomor nota : " . $noNota . "</h4><br><br>"; 
+                	?>
                     <form action="beli_bahan_makanan.php?step=3" name="supplier_form" method="POST">
                         <p>Pilih nama supplier</p>
                         <select name="namaSupplier">
@@ -67,21 +112,18 @@
                                 }
                             ?>
                         </select>
-                        <input type="hidden" name="submitNumNota" value="<?php echo $noNota; ?>">
+                        <input type="hidden" name="submitNumNota" value="<?php echo $noNota; ?>"> <br>
                         <input type="submit" name="ok2" value="OK">
                     </form>
-
-                    <?php
-                        if(isset($_POST['namaSupplier'])) {
-                            $supplierName = $_POST['namaSupplier'];
-                            $noNota = $_POST['submitNumNota'];
-                        }
-                    ?>
                 </div>
             
                 <div id="isi_ketiga" style="display:<?php echo $ketiga; ?>;">
-                    <?php echo "<h4>Nomor nota : " . $noNota . "</h4><br>"; ?>
-                    <?php echo "<h4>Nama supplier : " . $supplierName . "</h4><br>"; ?>
+                    <?php
+            	        $supplierName = $_POST['namaSupplier'];
+				        $noNota = $_POST['submitNumNota'];
+                    	echo "<h4>Nomor nota : " . $noNota . "</h4><br>";
+                    	echo "<h4>Nama supplier : " . $supplierName . "</h4><br>"; 
+                    ?>
                     <div align="left">
                         <div id="wrap" align="left">
                             <h5>Klik nama bahan baku untuk menambah ke cart</h5>
