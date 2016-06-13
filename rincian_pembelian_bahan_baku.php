@@ -49,7 +49,7 @@
 		<hr>
 		<hr>
 		<?php 
-			echo $resultToPembelian; 
+			echo "<span style='color:blue'>".$resultToPembelian."</span><br>"; 
 		?>
 		<table class="table table-responsive" width="80%">
 			<thead>
